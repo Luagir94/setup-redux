@@ -20,6 +20,9 @@ dependencies:
   react-redux:
     specifier: ^8.1.2
     version: 8.1.2(@types/react-dom@18.2.7)(@types/react@18.2.15)(react-dom@18.2.0)(react@18.2.0)(redux@4.2.1)
+  redux-thunk:
+    specifier: ^2.4.2
+    version: 2.4.2(redux@4.2.1)
 
 devDependencies:
   '@types/react':

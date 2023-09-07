@@ -1,11 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { GET_TODOS } from './thunks';
 
 
-export type Todo = {
+export interface Todo {
     title: string,
     isCompleted: boolean,
     id : number
+}
+export interface TodoConFoto{
+    title: string,
+    isCompleted: boolean,
+    id : number,
+    url : string
 }
 
 
@@ -25,7 +30,6 @@ const initialState : TodoState  = {
 
 
 
-
 export const todoSlice = createSlice({
     name : 'todo',
     initialState: initialState,
@@ -38,30 +42,32 @@ export const todoSlice = createSlice({
                 if(findTodo){
                     findTodo.isCompleted = true;
                 }
-        }
-    },
-    extraReducers : (builder) =>{
-        builder.addCase(GET_TODOS.pending, ( state   ) => {
+        },
+        LOAD_TODOS : (state) => {
             state.isLoading = true;
-        })
-
-        builder.addCase(GET_TODOS.fulfilled, (state, action : PayloadAction<Todo[]>) => {
+        },
+        LOAD_TODOS_SUCCESS : (state, action : PayloadAction<Todo[]>) => {
+            state.isLoading = false;
             state.todos = action.payload;
+        },
+        LOAD_TODOS_ERROR : (state) => {
             state.isLoading = false;
-        })
-
-        builder.addCase(GET_TODOS.rejected, ( state, action ) => {
-            state.isLoading = false;
-            state.isError = action.error.message ??  'Hay un error';
-        })
-
-
-}
+            state.isError = 'Algo fallo';
+        },
+    },
+ 
 });
+
+
+
+
 
 
 const todoReducer = todoSlice.reducer;
 
-export const { ADD_TODO ,  COMPLETE_TODO } = todoSlice.actions;
+export const { ADD_TODO , 
+     COMPLETE_TODO, 
+     LOAD_TODOS,LOAD_TODOS_SUCCESS , 
+      LOAD_TODOS_ERROR } = todoSlice.actions;
 
 export default todoReducer;

@@ -1,15 +1,13 @@
 import { useAppDispatch, useAppSelector } from './store'
 import { useEffect, useRef } from 'react'
 import './App.css'
-import { COMPLETE_TODO, ADD_TODO, Todo } from './store/todo/slice'
-import { GET_TODOS } from './store/todo/thunks'
+import { COMPLETE_TODO, ADD_TODO, Todo, LOAD_TODOS } from './store/todo/slice'
 import Cards from './components/Cards'
 
 
 
 
 function App() {
-  // const { value: counterValue } = useAppSelector((state) => state.counter)
   const { todos, isLoading, isError } = useAppSelector((state) => state.todo)
   const dispatch = useAppDispatch()
   const ref = useRef<HTMLInputElement>(null)
@@ -40,25 +38,12 @@ function App() {
   }
 
   useEffect(() => {
-    dispatch(GET_TODOS())
+    dispatch(LOAD_TODOS())
   }, [])
 
 
   return (
     <>
-      {/* <div className="card">
-        <button onClick={() => dispatch(INCREMENT_BY_ONE())}>
-          + 1
-        </button>
-        <button onClick={() => dispatch(DECREMENT_BY_ONE())}>
-          - 1
-        </button>
-        <button onClick={() => dispatch(INCREMENT_BY_AMOUNT(5))}>
-          + 5
-        </button>
-
-        <p>{counterValue}</p>
-      </div> */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         <h2>TODOS</h2>
         <label style={{ display: 'flex', gap: 15, alignItems: 'baseline' }}>
